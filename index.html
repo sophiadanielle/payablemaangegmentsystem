@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payable Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background: #1e1e2f;
+            color: #fff;
+        }
+        .sidebar {
+            width: 250px;
+            background: #282846;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar h3 {
+            color: #fff;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar p{
+            color: #fff;
+            font-size: 20px;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 12px;
+            display: block;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background: #3d3d63;
+            color: #fff;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+            text-align: center;
+            background: #252539;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .h2{
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+        .table-container{
+            margin-top: 30px;
+            text-align: left;
+            background: #2d2d44;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+            margin-left: 10px;
+            border-radius: 0px;
+            overflow: hidden;
+        }
+        th {
+            position: sticky;
+            top: 0;
+            background: #3d3d63;
+            z-index: 1;
+        } 
+        th, td {
+            border: 1px solid #555;
+            padding: 8px;
+            text-align: center;
+        }
+        .table-container-additional{
+            margin-top: 30px;
+            text-align: left;
+            background: #2d2d44;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px;
+        }
+        .add-btn {
+            margin-top: 15px;
+            margin-left: 10px;
+            padding: 12px 24px;
+            background: #4c4caf;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .add-btn:hover {
+            background: #3a3a8f;
+        }
+        .edit-btn, .delete-btn, .pay-btn {
+            padding: 5px 10px;
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .edit-btn { background: #ffb74d; color: #000; }
+        .delete-btn { background: #e53935; color: #fff; }
+        .pay-btn { background: #4caf50; color: #fff; }
+    </style>
+</head>
+<body>
+    
+    <div class="sidebar">
+        <nav class="top-nav">
+            <h3>Dashboard</h3><hr>
+<br>
+            <p>Welcome, <span id="usernameDisplay"></span>!</p>
+        </nav>
+             
+<br>
+        <a href="#">Payables</a>
+        <a href="payment.html">Payments</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="logout()">Logout</a>
+
+
+    </div>
+    <div class="content">
+        <h1>Payable Management System</h1>
+        <div class="table-container">
+            <h2>My Payables</h2>
+            <button class="add-btn" onclick="addPayable()">Add Payable</button>
+            <table id="payableTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>BSIT Gala Uniform</td>
+                        <td>₱1,170.00</td>
+                        <td>2025-00-00</td>
+                        <td>Pending</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                            <button class="pay-btn">Mark as Paid</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Midterm Exam Misc Fee</td>
+                        <td>₱1,000.00</td>
+                        <td>2025-00-00</td>
+                        <td>Pending</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                            <button class="pay-btn">Mark as Paid</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Final Exam Misc Fee</td>
+                        <td>₱1,000.00</td>
+                        <td>2025-00-00</td>
+                        <td>Pending</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                            <button class="pay-btn">Mark as Paid</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Miscellaneous Fee Balances</td>
+                        <td>₱0.00</td>
+                        <td>2025-00-00</td>
+                        <td>Pending</td>
+                        <td>
+                            <button class="edit-btn">Edit</button>
+                            <button class="delete-btn">Delete</button>
+                            <button class="pay-btn">Mark as Paid</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-container-additional">
+                <h2>His Payables</h2>
+                <button class="add-btn" onclick="addAdditionalPayable()">Add Payable</button>
+                <table id="additionalPayableTable">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Motor's Monthly Payment</td>
+                            <td>₱4,253.00</td>
+                            <td>2025-03-23</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                                <button class="pay-btn">Mark as Paid</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Kuya Joven (COOP)</td>
+                            <td>₱1,000.00</td>
+                            <td>2025-03-30</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                                <button class="pay-btn">Mark as Paid</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Ate Erene</td>
+                            <td>₱1,000.00</td>
+                            <td>2025-03-2</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                                <button class="pay-btn">Mark as Paid</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Room's Rent in Payatas</td>
+                            <td>₱1,500.00</td>
+                            <td>2025-03-30</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                                <button class="pay-btn">Mark as Paid</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Tita Irene</td>
+                            <td>₱1,000.00</td>
+                            <td>2025-03-2</td>
+                            <td>Pending</td>
+                            <td>
+                                <button class="edit-btn">Edit</button>
+                                <button class="delete-btn">Delete</button>
+                                <button class="pay-btn">Mark as Paid</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let username = localStorage.getItem("loggedInUser");
+            if (username) {
+                document.getElementById("usernameDisplay").textContent = username;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        function addPayable() {
+            let table = document.getElementById("payableTable").getElementsByTagName('tbody')[0];
+            let rowCount = table.rows.length + 1;
+            let row = table.insertRow();
+            row.innerHTML = `
+                <td>${rowCount}</td>
+                <td contenteditable="true">New Name</td>
+                <td contenteditable="true">₱0</td>
+                <td contenteditable="true">YYYY-MM-DD</td>
+                <td>Pending</td>
+                <td>
+                    <button class="edit-btn" onclick="editPayable(this)">Edit</button>
+                    <button class="delete-btn" onclick="deletePayable(this)">Delete</button>
+                    <button class="pay-btn" onclick="markAsPaid(this)">Mark as Paid</button>
+                </td>
+            `;
+        }
+        function addAdditionalPayable() {
+            let table = document.getElementById("additionalPayableTable").getElementsByTagName('tbody')[0];
+            let rowCount = table.rows.length + 1;
+            let row = table.insertRow();
+            row.innerHTML = `
+                <td>${rowCount}</td>
+                <td contenteditable="true">New Name</td>
+                <td contenteditable="true">₱0</td>
+                <td contenteditable="true">YYYY-MM-DD</td>
+                <td>Pending</td>
+                <td>
+                    <button class="edit-btn" onclick="editAdditionalPayable(this)">Edit</button>
+                    <button class="delete-btn" onclick="deleteAdditionalPayable(this)">Delete</button>
+                    <button class="pay-btn" onclick="markAsPaidAdditionalPayable(this)">Mark as Paid</button>
+                </td>
+            `;
+        }
+
+        function editPayable(button) {
+            let row = button.parentNode.parentNode;
+            let cells = row.querySelectorAll('td');
+            cells.forEach((cell, index) => {
+                if (index < 4) cell.contentEditable = "true";
+            });
+        }
+        function editAdditionalPayable(button) {
+            let row = button.parentNode.parentNode;
+            let cells = row.querySelectorAll('td');
+            cells.forEach((cell, index) => {
+                if (index < 4) cell.contentEditable = "true";
+            });
+        }
+        
+        function deletePayable(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        function deleteAdditionalPayable(button) {
+            let row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+        
+        function markAsPaid(button) {
+            let row = button.parentNode.parentNode;
+            let cells = row.getElementsByTagName('td');
+            let payments = JSON.parse(localStorage.getItem('payments')) || [];
+            let today = new Date().toISOString().split('T')[0];
+            let paymentData = {
+                 ID: cells[0].innerText,
+                name: cells[1].innerText,
+                amount: '₱' + cells[2].innerText.replace(/[^0-9.]/g, ''), // Ensures correct formatting
+                paidDate: today
+            };
+
+            payments.push(paymentData);
+            localStorage.setItem('payments', JSON.stringify(payments));
+            row.parentNode.removeChild(row);
+        }
+        function markAsPaidAdditionalPayable(button) {
+            let row = button.parentNode.parentNode;
+            let cells = row.getElementsByTagName('td');
+            let payments = JSON.parse(localStorage.getItem('payments')) || [];
+            let today = new Date().toISOString().split('T')[0];
+            let paymentData = {
+                ID: cells[0].innerText,
+                name: cells[1].innerText,
+                amount: '₱' + cells[2].innerText.replace(/[^0-9.]/g, ''), // Ensures correct formatting
+                paidDate: today
+            };
+
+            payments.push(paymentData);
+            localStorage.setItem('payments', JSON.stringify(payments));
+            row.parentNode.removeChild(row);
+        }
+        
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+    }
+
+    </script>
+</body>
+</html>

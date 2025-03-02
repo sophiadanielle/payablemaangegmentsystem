@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background: #1e1e2f;
+            color: #fff;
+        }
+        .sidebar {
+            width: 250px;
+            background: #282846;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+
+        
+        .sidebar h3 {
+            color: #fff;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar p{
+            color: #fff;
+            font-size: 20px;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+
+        .sidebar a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 12px;
+            display: block;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background: #3d3d63;
+            color: #fff;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+            text-align: center;
+            background: #252539;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .content h1{
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            text-align: left;
+        }
+
+        .settings-container {
+            margin-top: 20px;
+            background: #2d2d44;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+        .settings-container label {
+            display: block;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .settings-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            border: none;
+            background: #3d3d63;
+            color: #fff;
+        }
+        .save-btn {
+            margin-left: 85%;
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: #4c4caf; 
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .save-btn:hover {
+            background: #3a3a8f;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <nav class="top-nav">
+            <h3>Dashboard</h3><hr>
+<br>
+            <p>Welcome, <span id="usernameDisplay"></span>!</p>
+        </nav>
+             
+<br>
+        <a href="index.html">Payables</a>
+        <a href="payment.html">Payments</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="logout()">Logout</a>
+
+
+    </div>
+    <div class="content">
+        <h1>Settings</h1>
+        <div id="settings" class="settings-container">
+            <label for="updateUsername">Update Username</label>
+            <input type="text" id="updateUsername" placeholder="Enter new username">
+            <label for="updatePassword">Update Password</label>
+            <input type="password" id="updatePassword" placeholder="Enter new password">
+            <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+        </div>
+    </div>
+    <script>
+                document.addEventListener("DOMContentLoaded", function() {
+            let username = localStorage.getItem("loggedInUser");
+            if (username) {
+                document.getElementById("usernameDisplay").textContent = username;
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        function saveSettings() {
+            let newUsername = document.getElementById("updateUsername").value;
+            let newPassword = document.getElementById("updatePassword").value;
+            if (newUsername) {
+                localStorage.setItem("loggedInUser", newUsername);
+                document.getElementById("usernameDisplay").textContent = newUsername;
+            }
+            if (newPassword) {
+                localStorage.setItem("userPassword", newPassword);
+            }
+            alert("Settings updated successfully!");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Oswald', sans-serif;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            background: #1e1e2f;
+            color: #fff;
+        }
+        .sidebar {
+            width: 250px;
+            background: #282846;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        
+        .sidebar h3 {
+            color: #fff;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar p{
+            color: #fff;
+            font-size: 20px;
+            font-style: italic;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+
+        .sidebar a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 12px;
+            display: block;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .sidebar a:hover {
+            background: #3d3d63;
+            color: #fff;
+        }
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+            text-align: center;
+            background: #252539;
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .table-container {
+            margin-top: 20px;
+            text-align: left;
+            background: #2d2d44;
+            padding: 20px;
+            border-radius: 10px;
+            position: relative;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #555;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background: #3d3d63;
+        }
+        .delete-all-btn {
+            display: block;
+            margin-left: auto;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .delete-all-btn:hover {
+            background: #cc0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <nav class="top-nav">
+            <h3>Dashboard</h3><hr>
+<br>
+            <p>Welcome, <span id="usernameDisplay"></span>!</p>
+        </nav>
+             
+<br>
+        <a href="index.html">Payables</a>
+        <a href="payment.html">Payments</a>
+        <a href="settings.html">Settings</a>
+        <a href="#" onclick="logout()">Logout</a>
+
+
+    </div>
+    <div class="content">
+        <h1>Paid Payables</h1>
+        <div class="table-container">
+            <table id="paymentsTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Paid Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+            
+        </div>
+        <button class="delete-all-btn" onclick="deleteAllPayments()">Delete All</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let username = localStorage.getItem("loggedInUser");
+            if (username) {
+                document.getElementById("usernameDisplay").textContent = username;
+            } else {
+                window.location.href = "login.html";
+            }
+    
+            displayPayments();
+        });
+    
+        function displayPayments() {
+            let payments = JSON.parse(localStorage.getItem("payments")) || [];
+            let tableBody = document.querySelector("#paymentsTable tbody");
+            tableBody.innerHTML = "";
+    
+            payments.forEach((payment, index) => {
+                let row = `<tr>
+                    <td>${index + 1}</td>
+                    <td>${payment.name}</td>
+                    <td>${payment.amount}</td>
+                    <td>${payment.paidDate}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+        function deleteAllPayments() {
+            localStorage.removeItem("payments");
+            displayPayments();
+        }
+    </script>
+    
+</body>
+</html>
